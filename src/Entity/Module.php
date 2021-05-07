@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\ModuleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ModuleRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\RangeValidator;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -28,6 +31,10 @@ class Module
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Assert\Range(
+     *      min = 0.5,
+     *      minMessage = "La durée doit être supérieur ou égal à 0.5",
+     *      )
      */
     private $nbHeures;
 

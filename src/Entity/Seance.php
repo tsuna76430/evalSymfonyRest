@@ -2,9 +2,13 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\SeanceRepository;
+
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SeanceRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\RangeValidator;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -25,7 +29,13 @@ class Seance
     private $dateSeance;
 
     /**
-     * @ORM\Column(type="decimal", precision=1, scale=1)
+     * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Assert\Range(
+     *      min = 0.5,
+     *      minMessage = "La durée doit être supérieur ou égal à 0.5",
+     *      max = 4,
+     *      maxMessage = "La durée doit être inférieur ou égal à 4"
+     *      )
      */
     private $duree;
 

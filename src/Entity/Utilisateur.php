@@ -41,6 +41,16 @@ class Utilisateur implements UserInterface
      */
     private $formations;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prenom;
+
     public function __construct()
     {
         $this->formations = new ArrayCollection();
@@ -149,5 +159,34 @@ class Utilisateur implements UserInterface
         $this->formations->removeElement($formation);
 
         return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getNomprenom()
+    {
+        return $this->nom." ".$this->prenom;
     }
 }

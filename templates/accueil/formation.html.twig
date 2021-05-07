@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()}}Hello AccueilController!{% endblock %}
+
+{% block body %}
+    {{ parent()}}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+    <a href="{{path("accueil") }}">retour à l'accueil</a> 
+    {% if is_granted("ROLE_ADMIN") == "ROLE_ADMIN" %}
+        <a href="{{ path("addModule") }}">Créer un nouveau module</a>
+    {% endif %}
+    {% if is_granted("ROLE_FORMATEUR") == "ROLE_FORMATEUR" %}
+        {% for module in listeModules %}
+                {% if formation.getId() == module.getFormation().getId() %}
+                    <li>
+                        <a href="{{path("module", {nomFormation : module.getFormation().getNom() , nomModule: module.nom}) }}">{{ module.nom }}</a> 
+                        {% if is_granted("ROLE_FORMATEUR") == "ROLE_FORMATEUR" %}
+                            <a href="{{ path("modModule", {id: module.id}) }}">Modifier</a>
+                            <a href="{{ path("supModule", {id: module.id}) }}">Supprimer</a>
+                        {% endif %}
+                    </li>
+                {% endif %}
+        {% endfor %}
+    {% else %}
+        <p> bonjour étudiant </p>
+    {% endif %}
+{% endblock %}
