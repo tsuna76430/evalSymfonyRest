@@ -17,7 +17,7 @@
                 {% if formation.getId() == module.getFormation().getId() %}
                     <li>
                         <a href="{{path("module", {nomFormation : module.getFormation().getNom() , nomModule: module.nom}) }}">{{ module.nom }}</a> 
-                        {% if is_granted("ROLE_FORMATEUR") == "ROLE_FORMATEUR" %}
+                        {% if is_granted("ROLE_ADMIN") == "ROLE_ADMIN" %}
                             <a href="{{ path("modModule", {id: module.id}) }}">Modifier</a>
                             <a href="{{ path("supModule", {id: module.id}) }}">Supprimer</a>
                         {% endif %}

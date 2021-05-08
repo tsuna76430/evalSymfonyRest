@@ -6,7 +6,7 @@
     {{ parent()}}
     <a href="{{path("accueil") }}">retour à l'accueil</a> 
 
-    {% if is_granted("ROLE_ADMIN") == "ROLE_ADMIN" or is_granted("ROLE_ETUDIANT") == "ROLE_ETUDIANT" %}
+    {% if is_granted("ROLE_ADMIN") == "ROLE_ADMIN" %}
         {% set nomFormation = "" %}
         {% set nomModule = "" %}
         {% for formation in listeFormations %}
@@ -40,6 +40,31 @@
                 </div>
             </div>
         </div>
+    {% else %}
+        {% set nomFormation = "" %}
+        {% set nomModule = "" %}
+        {% for formation in listeFormations %}
+            {% if formation.nom ==  app.request.attributes.get('_route_params')['nomFormation'] %}
+                {% set nomFormation = formation %}
+            {% endif %}
+        {% endfor %}
+
+        {% for module in listeModules %}
+            {% if nomFormation.getId() == module.getFormation().getId() and module.nom ==  app.request.attributes.get('_route_params')['nomModule']%}
+                {% set nomModule = module %}
+            {% endif %}
+        {% endfor %}
+
+        {% for seance in listeSeances %}
+            {% if seance.getModule().getId() == nomModule.getId()%}
+                <div>
+                </br>
+                <p> {{ seance.titre }} </p>
+                <p> {{seance.dateSeance|date('d/m/Y')}} </p>
+                <p> {{ seance.contenu}} </p>
+                </div>
+            {% endif %}
+        {% endfor %}
     {% endif %}
 {% endblock %}
 {% block javascripts %}
