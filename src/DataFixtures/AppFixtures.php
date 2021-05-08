@@ -9,9 +9,6 @@ use App\Entity\Formation;
 use App\Entity\Utilisateur;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -60,27 +57,6 @@ class AppFixtures extends Fixture
                 }
             }
 
-            //Utilisateur
-            // $utilisateur = new Utilisateur;
-            // $utilisateur->setNom($faker->words(12, true));
-            // $utilisateur->setPrenom($faker->words(12, true));
-            // $utilisateur->setEmail($faker->freeEmail());
-
-            // $plainPassword = $faker->password(8, 12);
-            // //$password = $this->encode->encodePassword($utilisateur, $plainPassword);
-            // $utilisateur->setPassword($plainPassword);
-
-            // $alea = mt_rand(0, 9);
-            // if ($alea <= 4)
-            // {
-            //     $utilisateur->setRoles(array("ROLE_ETUDIANT"));
-            // }
-            // else
-            // {
-            //     $utilisateur->setRoles(array("ROLE_FORMATEUR"));
-            // }
-            // $manager->persist($utilisateur);
-
             $user = new Utilisateur();
             $user->setEmail($faker->freeEmail());
             $password = $this->encoder->encodePassword($user, $faker->password(8, 12));
@@ -112,8 +88,5 @@ class AppFixtures extends Fixture
         $user->setRoles(array("ROLE_ADMIN"));
         $manager->persist($user);
         $manager->flush();
-
-      
-
     }
 }

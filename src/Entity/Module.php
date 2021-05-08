@@ -7,12 +7,16 @@ use App\Repository\ModuleRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints\Range;
-use Symfony\Component\Validator\Constraints\RangeValidator;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *              collectionOperations={},
+ *              itemOperations={"get"},
+ *              normalizationContext={"groups"={"module:read"}},
+ *              denormalizationContext={"groups"={"module:write"}}
+ * )
  * @ORM\Entity(repositoryClass=ModuleRepository::class)
  */
 class Module
@@ -21,16 +25,19 @@ class Module
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("module:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("module:read")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Groups("module:read")
      * @Assert\Range(
      *      min = 0.5,
      *      minMessage = "La durée doit être supérieur ou égal à 0.5",
@@ -41,12 +48,14 @@ class Module
     /**
      * @ORM\ManyToOne(targetEntity=Formation::class, inversedBy="modules")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("module:read")
      */
     private $formation;
 
     /**
      * @ORM\OneToMany(targetEntity=Seance::class, mappedBy="module", orphanRemoval=true)
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("module:read")
      */
     private $seances;
 

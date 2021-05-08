@@ -1,4 +1,7 @@
 api_platform:
+    title: "API REST avec Symfony"
+    description: "Création d'une API avec Symfony pour l'eval en REST"
+    version: "1.0.0"
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
     patch_formats:

@@ -6,12 +6,17 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SeanceRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
-use Symfony\Component\Validator\Constraints\Range;
-use Symfony\Component\Validator\Constraints\RangeValidator;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
- * @ApiResource()
+ * @ApiResource(
+ *              collectionOperations={"post"},
+ *              itemOperations={"get","patch"},
+ *              normalizationContext={"groups"={"seance:read"}},
+ *              denormalizationContext={"groups"={"seance:write"}}
+ * )
  * @ORM\Entity(repositoryClass=SeanceRepository::class)
  */
 class Seance
@@ -20,16 +25,19 @@ class Seance
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("seance:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("seance:read")
      */
     private $dateSeance;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Groups("module:read")
      * @Assert\Range(
      *      min = 0.5,
      *      minMessage = "La durée doit être supérieur ou égal à 0.5",
@@ -41,11 +49,13 @@ class Seance
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("seance:read","seance:write")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("seance:read","seance:write")
      */
     private $contenu;
 
@@ -57,6 +67,7 @@ class Seance
     /**
      * @ORM\ManyToOne(targetEntity=Module::class, inversedBy="seances")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("seance:read")
      */
     private $module;
 

@@ -2,13 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\UtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @ApiResource(
+ *              collectionOperations={"get"},
+ *              itemOperations={"get"},
+ *              normalizationContext={"groups"={"utilisateur:read"}},
+ *              denormalizationContext={"groups"={"utilisateur:write"}}
+ * )
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  */
 class Utilisateur implements UserInterface
@@ -17,16 +25,19 @@ class Utilisateur implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("utilisateur:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups("utilisateur:read")
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups("utilisateur:read")
      */
     private $roles = [];
 
@@ -38,16 +49,19 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity=Formation::class, inversedBy="utilisateurs")
+     * @Groups("utilisateur:read")
      */
     private $formations;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("utilisateur:read")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("utilisateur:read")
      */
     private $prenom;
 
