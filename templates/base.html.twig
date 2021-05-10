@@ -15,17 +15,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                {% if is_granted("ROLE_ADMIN") == "ROLE_ADMIN" %}
-                <li class="nav-item">
-                    <a class="nav-link" href="https://127.0.0.1:8000/admin/inscription">Inscription</a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="https://127.0.0.1:8000/logout">Déconnexion</a>
-                </li>
+                    {% if is_granted("ROLE_ADMIN") == "ROLE_ADMIN" %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="https://127.0.0.1:8000/admin/">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://127.0.0.1:8000/admin/inscription">Inscription</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="https://127.0.0.1:8000/accueil">Accueil</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://127.0.0.1:8000/logout">Déconnexion</a>
+                    </li>
                 </ul>
             </div>
         </nav>

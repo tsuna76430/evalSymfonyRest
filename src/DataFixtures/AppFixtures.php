@@ -81,7 +81,7 @@ class AppFixtures extends Fixture
 
         $user = new Utilisateur();
         $user->setEmail('theo.brentot@gmail.com');
-        $password = $this->encoder->encodePassword($user, 'toto251197');
+        $password = $this->encoder->encodePassword($user, 'admin');
         $user->setPassword($password);
         $user->setNom('Brentot');
         $user->setPrenom('Theo');

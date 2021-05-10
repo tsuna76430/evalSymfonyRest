@@ -106,7 +106,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/supformation/{id}", name="supFormation")
      */
-    public function supprimerProduitAction(Formation $formation): Response
+    public function supprimerFormation(Formation $formation): Response
     {
         $em=$this->getDoctrine()->getManager();
         $em->remove($formation);
